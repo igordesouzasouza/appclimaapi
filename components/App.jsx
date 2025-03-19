@@ -11,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 import axios from "axios";
-
+//.env local aqui 
 const API_KEY = "91c6798f86f7493420630576864cac9a"; 
 const API_COUNTRY_URL = "https://countryflagsapi.com/png/";
 const API_UNSPLASH = "https://source.unsplash.com/1600x900/?";
@@ -22,7 +22,6 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  // Lista de cidades sugeridas
   const suggestedCities = [
     "Rio do Sul",
     "Joinville",
@@ -44,7 +43,7 @@ export default function App() {
 
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${API_KEY}&lang=pt_br`
+        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${API_KEY}&lang=pt_br` //parameters
       );
       setWeatherData(response.data);
     } catch (error) {
@@ -61,7 +60,6 @@ export default function App() {
     >
       <Text style={styles.title}>Clima da cidade:</Text>
 
-      {/* Input e Botão de Busca */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -78,21 +76,20 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      {/* Exibição do Clima */}
-      {loading && <ActivityIndicator size="large" color="#0000ff" />}
-      {error && <Text style={styles.errorText}>Cidade não encontrada! ❌</Text>}
+      {loading && <ActivityIndicator size="large" color="#000" />}
+      {error && <Text style={styles.errorText}>Cidade não encontrada!</Text>}
 
       {weatherData && (
         <View style={styles.weatherContainer}>
           <Text style={styles.cityName}>
-            📍 {weatherData.name}{" "}
+             {weatherData.name}
             <Image
               source={{ uri: API_COUNTRY_URL + weatherData.sys.country }}
               style={styles.countryFlag}
             />
           </Text>
           <Text style={styles.temperature}>
-            🌡 {parseInt(weatherData.main.temp)}°C
+             {parseInt(weatherData.main.temp)}°C
           </Text>
           <Text style={styles.description}>
             {weatherData.weather[0].description}
@@ -103,12 +100,12 @@ export default function App() {
             }}
             style={styles.weatherIcon}
           />
-          <Text style={styles.details}>💧 Umidade: {weatherData.main.humidity}%</Text>
-          <Text style={styles.details}>💨 Vento: {weatherData.wind.speed} km/h</Text>
+          <Text style={styles.details}> Umidade: {weatherData.main.humidity}%</Text>
+          <Text style={styles.details}> Vento: {weatherData.wind.speed} km/h</Text>
         </View>
       )}
 
-      {/* Sugestões de cidades */}
+      {/* Sugestões das cidades */}
       <View style={styles.suggestionsContainer}>
         {suggestedCities.map((cityName) => (
           <TouchableOpacity
@@ -153,7 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   searchButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: "#000",
     padding: 10,
     borderRadius: 5,
     marginLeft: 10,
@@ -175,6 +172,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     flexDirection: "row",
     alignItems: "center",
+    textAlign: 'center',
+    justifyContent: 'center',
+    marginRight: -30,
   },
   countryFlag: {
     width: 30,
@@ -190,6 +190,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontStyle: "italic",
     marginBottom: 10,
+    textAlign: "center",
+    justifyContent: "center",
   },
   weatherIcon: {
     width: 80,
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   suggestionButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: "#000",
     padding: 10,
     borderRadius: 5,
     margin: 5,
